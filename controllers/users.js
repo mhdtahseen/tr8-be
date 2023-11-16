@@ -1,9 +1,9 @@
 import express from "express";
+import bcrypt from "bcrypt";
 const router = express.Router();
 import UserCol from "../models/users.js";
 
 /* GET */
-
 export async function getAll(req, res) {
   try {
     const users = await UserCol.find();
@@ -14,25 +14,28 @@ export async function getAll(req, res) {
 }
 
 /* GET BY ID */
-// router.get("/:id", getUser, (req, res) => {
-//   res.json(res.user);
-// });
+export  function getSingleUser(req, res) {
+  res.json(res.user);
+}
 
 /* ADD NEW USER */
-// router.post("/", async (req, res) => {
-//   const userData = new UserCol({
-//     name: req.body.name,
-//     email: req.body.email,
-//     password: req.body.password,
-//     age: req.body.age,
-//   });
-//   try {
-//     const newUser = await userData.save();
-//     res.status(201).json(newUser);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// });
+
+export async function addUser(req, res) {
+  const userData = new UserCol({
+    name: req.body.name,
+    email: req.body.email,
+    password: await bcrypt.hash(req.body.password,12),
+    contact : req.body.contact,
+    alias : req.body.alias,
+    age: req.body.age,
+  });
+  try {
+    const newUser = await userData.save();
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
 
 /* Update BY ID */
 
