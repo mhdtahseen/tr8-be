@@ -1,0 +1,19 @@
+GET http://localhost:3005/users
+
+
+### 
+
+POST  http://localhost:3005/users
+Content-Type: application/json
+
+{
+    "name": "Aamer",
+    "email" : "aamer@xyz.com",
+    "password" : "test123",
+    "age" : 23
+}
+
+
+###
+
+GET http://localhost:3005/users/65529a7ce125c765900199f4
